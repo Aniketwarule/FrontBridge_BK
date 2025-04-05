@@ -10,7 +10,6 @@ app.use(express.json());
 
 app.use("/orgs", OrgsRoute);
 app.use("/investors", InvestorRoute);
-app.use("/admin", AdminRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
