@@ -20,18 +20,13 @@ model Investor {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   industryInterests String[]
-  investmentScale   InvestmentScale
+  investmentScale   String
   investments       Investment[]
   isActive          Boolean             @default(true)
   
-  @@map("users")
+  @@map("investors")
 }
 
-enum InvestmentScale {
-  MICRO
-  SMALL
-  MEDIUM
-}
 
 model organization {
   id                String              @id @default(uuid())
