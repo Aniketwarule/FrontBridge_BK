@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Investor {
+  id                String              @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String              @unique
+  phone             String
+  password          String              // Will store hashed password
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  industryInterests String[]
+  investmentScale   InvestmentScale
+  investments       Investment[]
+  isActive          Boolean             @default(true)
+  
+  @@map("users")
+}
+
+enum InvestmentScale {
+  MICRO
+  SMALL
+  MEDIUM
+}
+
+model organization {
+  id                String              @id @default(uuid())
+  name              String
+  industry          String
+  numberOfEmployees Int
+  email             String              @unique
+  phone             String
+  password          String              // Will store hashed password
+  website           String
+  businessDescription String
+  investments       Investment[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  isActive          Boolean             @default(true)
+  faqs             String[]
+  location         String
+
+  @@map("organizations")
+  Entrepreneur Entrepreneur[]
+}
+
+model campaign {
+  id                String              @id @default(uuid())
+  title             String
+  description       String
+  targetAmt         Int
+  equityOffered     Float
+  minInvestmentAmt  Int
+  buisnessPlan      String
+  financialProjec   String
+  marketAnalysis    String
+  riskFactor        String
+  startDate         DateTime
+  endDate           DateTime
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@map("campaigns")
+}
+
+model Entrepreneur {
+  id                String              @id @default(uuid())
+  name              String
+  organizationId    String
+  organization      organization        @relation(fields: [organizationId], references: [id])
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  isActive          Boolean             @default(true)
+  
+  @@map("entrepreneurs")
+}
+
+model Investment {
+  id              String        @id @default(uuid())
+  amount          Decimal       @db.Decimal(10, 2)
+  investor        Investor          @relation(fields: [investorId], references: [id])
+  investorId      String
+  organization    organization     @relation(fields: [organizationId], references: [id])
+  organizationId  String
+  status          InvestmentStatus @default(PENDING)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@map("investments")
+}
+
+enum InvestmentStatus {
+  PENDING
+  APPROVED
+  COMPLETED
+  CANCELLED
+}
