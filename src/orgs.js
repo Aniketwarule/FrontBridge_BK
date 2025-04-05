@@ -1,4 +1,3 @@
-
 const express = require("express");
 const { PrismaClient } = require('@prisma/client');
 const router = express.Router();
@@ -25,51 +24,54 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const { name, industry, numberOfEmployees, email, phone, password, website, businessDescription, faqs, location } = req.body;
     const org = await prisma.organization.create({
       data: {
         name,
         industry,
-        numberOfEmployees,
+        numberOfEmployees: numberOfEmployees ? parseInt(numberOfEmployees, 10) : 0,
         email,
         phone,
         password,
         website,
         businessDescription,
-        faqs,
+        faqs: faqs != "" ? faqs : [""],
         location,
       },
     });
-    res.json(org);
+    console.log("sucess",res.json(org));
+    
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: error.message });
+    console.log(error);
   }
 });
 
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, industry, numberOfEmployees, email, phone, password, website, businessDescription, faqs, location } = req.body;
+    const { name, industry, numberOfEmployees, email, phone, password, website, businessDescription, location } = req.body;
     const org = await prisma.organization.update({
       where: { id },
       data: {
         name,
         industry,
-        numberOfEmployees,
+        numberOfEmployees: numberOfEmployees ? parseInt(numberOfEmployees, 10) : 0,
         email,
         phone,
         password,
         website,
         businessDescription,
-        faqs,
         location,
       },
     });
     res.json(org);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: error.message });
+    console.log(error);
+    
   }
 });
 

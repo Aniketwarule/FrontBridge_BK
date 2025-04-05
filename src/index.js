@@ -3,12 +3,14 @@ const cors = require("cors");
 const OrgsRoute = require("./orgs");
 const InvestorRoute = require("./investors");
 const AdminRoute = require("./admin");
+const campaignRoutes = require('./campaigns');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/orgs", OrgsRoute);
+app.use('/campaigns', campaignRoutes);
 app.use("/investors", InvestorRoute);
 
 app.get("/", (req, res) => {
