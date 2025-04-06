@@ -42,6 +42,8 @@ model organization {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   isActive          Boolean             @default(true)
+  isVerified        Boolean             @default(false)
+  isApplied         Boolean             @default(false)
   faqs             String[]
   location         String
 
@@ -52,7 +54,9 @@ model organization {
 model campaign {
   id                String              @id @default(uuid())
   title             String
+  image             String
   description       String
+  organizationId    String
   targetAmt         Int
   equityOffered     Float
   minInvestmentAmt  Int
@@ -65,7 +69,6 @@ model campaign {
   isActive          Boolean             @default(true)
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
-  
   @@map("campaigns")
 }
 
