@@ -54,6 +54,7 @@ router.post("/", async (req, res) => {
         // Map frontend field names to database field names
         title,
         description,
+        image,
         targetAmt: targetAmount ? parseInt(targetAmount, 10) : 0,
         equityOffered: equity ? parseFloat(equity) : 0,
         minInvestmentAmt: minimumInvestment ? parseInt(minimumInvestment, 10) : 0,

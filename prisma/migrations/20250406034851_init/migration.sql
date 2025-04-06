@@ -32,6 +32,8 @@ CREATE TABLE "organizations" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+    "isApplied" BOOLEAN NOT NULL DEFAULT false,
     "faqs" TEXT[],
     "location" TEXT NOT NULL,
 
@@ -42,7 +44,9 @@ CREATE TABLE "organizations" (
 CREATE TABLE "campaigns" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "organizationId" TEXT NOT NULL,
     "targetAmt" INTEGER NOT NULL,
     "equityOffered" DOUBLE PRECISION NOT NULL,
     "minInvestmentAmt" INTEGER NOT NULL,
