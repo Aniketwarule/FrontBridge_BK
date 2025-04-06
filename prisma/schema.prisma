@@ -42,6 +42,8 @@ model organization {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   isActive          Boolean             @default(true)
+  isVerified        Boolean             @default(false)
+  isApplied         Boolean             @default(false)
   faqs             String[]
   location         String
 
@@ -50,23 +52,20 @@ model organization {
 }
 
 model campaign {
-  id                String              @id @default(uuid())
-  title             String
-  description       String
-  targetAmt         Int
-  equityOffered     Float
-  minInvestmentAmt  Int
-  buisnessPlan      String
-  financialProjec   String
-  marketAnalysis    String
-  riskFactor        String
-  startDate         DateTime
-  endDate           DateTime
-  isActive          Boolean             @default(true)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  
-  @@map("campaigns")
+  id                 String   @id @default(uuid())
+  title              String
+  description        String
+  targetAmt          Int
+  equityOffered      Float
+  minInvestmentAmt   Int
+  buisnessPlan       String
+  financialProjec    String
+  marketAnalysis     String
+  riskFactor         String
+  startDate          DateTime
+  endDate            DateTime
+  organizationId     String
+  isActive           Boolean
 }
 
 model Entrepreneur {

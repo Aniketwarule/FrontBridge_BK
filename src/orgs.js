@@ -37,6 +37,9 @@ router.post("/register", async (req, res) => {
         password,
         website,
         businessDescription,
+        isActive: true,
+        isVerified: false,
+        isApplied: false,
         location,
       },
     });
