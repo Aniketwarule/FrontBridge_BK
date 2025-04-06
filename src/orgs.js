@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const orgs = await prisma.organization.findMany();
     res.json(orgs);
@@ -12,11 +12,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     const org = await prisma.organization.findUnique({
-      where: { id },
+      where: {id},
     });
     res.json(org);
   } catch (error) {
@@ -37,7 +37,6 @@ router.post("/register", async (req, res) => {
         password,
         website,
         businessDescription,
-        faqs: faqs != "" ? faqs : [""],
         location,
       },
     });

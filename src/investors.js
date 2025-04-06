@@ -46,7 +46,7 @@ router.post("/register", async (req, res) => {
 // Get all investors
 router.get("/", async (req, res) => {
   try {
-    const investors = await prisma.investor.findMany({
+    const investor = await prisma.investor.findMany({
       select: {
         id: true,
         firstName: true,
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
         // Exclude password field for security
       }
     });
-    res.json(investors);
+    res.json(investor);
   } catch (error) {
     console.error("Error fetching investors:", error);
     res.status(500).json({ message: "Internal Server Error" });
